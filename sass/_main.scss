@@ -1,0 +1,81 @@
+$color: red;
+$link_color: #d2d2d2;
+$btn_color: #f4dd29;
+
+h1{
+  color: $color;
+}
+
+ul{
+  font-size: 14px;
+
+  a{
+    color: $link_color;
+
+    &:hover{
+      color: blue;
+    }
+  }
+
+  div & + a{
+    color: orange;
+  }
+}
+
+.btn{
+  border-radius: 5px;
+  color: $btn_color;
+  border: 1px solid darken($btn_color, 25%);
+  background-color: transparentize($btn_color, 0.9);
+}
+
+.warning{
+  @extend .btn;
+  color: $color;
+  background-color: transparentize($color, 0.9);
+}
+
+.success{
+  @extend .btn;
+  color: green;
+  background-color: transparentize(green, 0.9);
+}
+
+// Grid system width sass for cycle
+
+@mixin grid( // Своя функція
+  $width: 960px,
+  $gutter: 20px,
+  $columns: 12,
+  $preffix: true,
+  $pull: true
+) {
+  $column_width: $width/$columns;
+
+  .grid{
+    display: inline;
+    float: left;
+    margin-left: $gutter/2;
+    margin-right: $gutter/2;
+  }
+
+  @for $i from 1 through $columns {
+    .grid_#{$i} {
+      @extend .grid;
+      width: $i * $column_width - $gutter;
+    }
+
+    @if $preffix == true {
+      .prefix_#{$i} {
+        padding-left: $i * $column_width;
+      }
+
+      .suffix_#{$i} {
+        padding-right: $i * $column_width;
+      }
+    }
+  }
+}
+
+// Виклик своєї функції
+@include grid;
